@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:whether_app/forcast_card.dart';
 import 'package:whether_app/additional_info_card.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +34,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
 		try {
 			String cityName = 'Penang';
-			String apiKey = 'efb25f9d77654438800175305250106';
+			String apiKey = dotenv.env['APIKEY'] ?? '';
 			final currentRes = await http.get(
 				Uri.parse(
 					'http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$cityName&days=2'
