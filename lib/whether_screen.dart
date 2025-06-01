@@ -21,8 +21,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 	int humidity = 0;
 	double windSpeed = 0;
 	int pressure = 0;
-
-	
+	int currentHour = DateTime.now().hour;
 
 	@override
 	void initState() {
@@ -34,10 +33,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
 		try {
 			String cityName = 'Penang';
-			String apiKey = '5c44418f5c254abf9cb15458250205';
+			String apiKey = 'efb25f9d77654438800175305250106';
 			final currentRes = await http.get(
 				Uri.parse(
-					'http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$cityName&days=2&aqi=no&alerts=no'
+					'http://api.weatherapi.com/v1/forecast.json?key=$apiKey&q=$cityName&days=2'
 				),
 			);
 
@@ -95,7 +94,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 					} else {
 						final data = snapshot.data!;
 						city = ('${data['location']['name']}');
-						temp = data['current']['temp_c'];
+						temp = data['forecast']['forecastday'][0]['hour'][currentHour]['temp_c'];
 						weather = ('${data['current']['condition']['text']}');
 						icon = ('${data['current']['condition']['icon']}');
 						humidity = data['current']['humidity'].toInt();
@@ -187,20 +186,18 @@ class _WeatherScreenState extends State<WeatherScreen> {
 											scrollDirection: Axis.horizontal,
 											itemCount: 5,	
 											itemBuilder: (context, index) {
-												final timeCount = int.parse(DateTime.now().toString().substring	(11, 13)) + 9;
-
-												if (timeCount + index > 23) {
+												if (currentHour + index > 23) {
 													return ForecastCard(
-														time: data['forecast']['forecastday'][1]['hour'][timeCount + 	index - 24]['time'].substring(11, 16),
-														icon: data['forecast']['forecastday'][1]['hour'][timeCount + 	index - 24]['condition']['icon'],
-														temp: data['forecast']['forecastday'][1]['hour'][timeCount + 	index - 24]['temp_c'].toDouble(),
+														time: data['forecast']['forecastday'][1]['hour'][currentHour +	index + 1 - 24]['time'].substring(11, 16),
+														icon: data['forecast']['forecastday'][1]['hour'][currentHour + 	index + 1 - 24]['condition']['icon'],
+														temp: data['forecast']['forecastday'][1]['hour'][currentHour + 	index + 1 - 24]['temp_c'].toDouble(),
 													);
 												} else {
 
 													return ForecastCard(
-														time: data['forecast']['forecastday'][0]['hour'][timeCount + 	index]['time'].substring(11, 16),
-														icon: data['forecast']['forecastday'][0]['hour'][timeCount + 	index]['condition']['icon'],
-														temp: data['forecast']['forecastday'][0]['hour'][timeCount + 	index]['temp_c'].toDouble(),
+														time: data['forecast']['forecastday'][0]['hour'][currentHour + 	index + 1]['time'].substring(11, 16),
+														icon: data['forecast']['forecastday'][0]['hour'][currentHour + 	index + 1]['condition']['icon'],
+														temp: data['forecast']['forecastday'][0]['hour'][currentHour + 	index + 1]['temp_c'].toDouble(),
 													);
 												}
 											},
