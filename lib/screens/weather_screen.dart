@@ -2,18 +2,21 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:whether_app/forcast_card.dart';
-import 'package:whether_app/additional_info_card.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whether_app/widgets/forcast_card.dart';
+import 'package:whether_app/widgets/additional_info_card.dart';
 import 'package:http/http.dart' as http;
+import 'package:whether_app/providers/location_provider.dart';
+import 'package:whether_app/providers/settings_provider.dart';
 
-class WeatherScreen extends StatefulWidget {
+class WeatherScreen extends ConsumerStatefulWidget {
   const WeatherScreen({super.key});
 
   @override
-  State<WeatherScreen> createState() => _WeatherScreenState();
+  ConsumerState<WeatherScreen> createState() => _WeatherScreenState();
 }
 
-class _WeatherScreenState extends State<WeatherScreen> {
+class _WeatherScreenState extends ConsumerState<WeatherScreen> {
 	bool isLoading = true;
 	String city = '';
 	double temp = 0;
@@ -22,7 +25,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 	int humidity = 0;
 	double windSpeed = 0;
 	int pressure = 0;
-	int currentHour = DateTime.now().hour;
+	int currentHour = 0;
 
 	@override
 	void initState() {
@@ -31,9 +34,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
 	}
 
 	Future<Map<String, dynamic>> getCurrentWeather() async {
-
 		try {
-			String cityName = 'Penang';
+
+			String cityName = ref.watch(locationNotifier).city;
+			print('City: $cityName');
 			String apiKey = dotenv.env['APIKEY'] ?? '';
 			final currentRes = await http.get(
 				Uri.parse(
@@ -48,8 +52,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 			}
 
 			return currentData;
-			
-
+	
 		} catch (e) {
 			debugPrint('Error: $e');
 			throw Exception('Failed to fetch weather data');
@@ -69,14 +72,41 @@ class _WeatherScreenState extends State<WeatherScreen> {
 				),
 				centerTitle: true,
 				actions: [
-					IconButton(
-						icon: Icon(Icons.refresh),
-						onPressed: () {
-							setState(() {
-							  
-							});
+					PopupMenuButton(
+						elevation: 12,
+						shape: RoundedRectangleBorder(
+							borderRadius: BorderRadius.circular(12),
+						),
+						itemBuilder: (context) {
+							return [
+								PopupMenuItem(
+									value: 'refresh',
+									child: Text('Refresh'),
+								),
+								PopupMenuItem(
+									value: 'change location',
+									child: Text('Change Location'),
+								),
+								PopupMenuItem(
+									value: 'settings',
+									child: Text('Settings'),
+								),
+							];
 						},
-					)
+						onSelected: (value) {
+						  if (value == 'change location') {
+								// Navigate to change location page
+								Navigator.pushNamed(context, '/changeLocation');
+							} else if (value == 'settings') {
+								// Navigate to settings page
+								Navigator.pushNamed(context, '/settings');
+							} else if (value == 'refresh') {
+								// Refresh the weather data
+								setState(() {});
+							}
+							
+						},
+					),
 				],
 			),
 
@@ -94,6 +124,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 						);
 					} else {
 						final data = snapshot.data!;
+						currentHour = int.parse(data['location']['localtime'].substring(11, 13));
 						city = ('${data['location']['name']}');
 						temp = data['forecast']['forecastday'][0]['hour'][currentHour]['temp_c'];
 						weather = ('${data['current']['condition']['text']}');
@@ -185,9 +216,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
 										height: 130,
 										child: ListView.builder(
 											scrollDirection: Axis.horizontal,
-											itemCount: 5,	
+											itemCount: 12,	
 											itemBuilder: (context, index) {
-												if (currentHour + index > 23) {
+												if (currentHour + index + 1 > 23) {
 													return ForecastCard(
 														time: data['forecast']['forecastday'][1]['hour'][currentHour +	index + 1 - 24]['time'].substring(11, 16),
 														icon: data['forecast']['forecastday'][1]['hour'][currentHour + 	index + 1 - 24]['condition']['icon'],

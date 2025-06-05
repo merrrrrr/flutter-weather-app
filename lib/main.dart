@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:whether_app/whether_screen.dart';
+import 'package:whether_app/screens/weather_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:whether_app/screens/change_location_screen.dart';
+import 'package:whether_app/screens/settings_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
 	await dotenv.load(fileName: '.env');
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -23,6 +26,10 @@ class _MyAppState extends State<MyApp> {
 			theme: ThemeData.dark(
 				useMaterial3: true
 			),
+			routes: {
+				'/changeLocation': (context) => const ChangeLocationScreen(),
+				'/settings': (context) => const SettingsScreen(),
+			},
 			home: const WeatherScreen(),
     );
   }
