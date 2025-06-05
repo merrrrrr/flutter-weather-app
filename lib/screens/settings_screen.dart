@@ -18,7 +18,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Scaffold(
 			appBar: AppBar(
 				title: Text(
-					'Settings',
+					'Settings (In Progress)',
 					style: TextStyle(
 						fontWeight: FontWeight.bold,
 					),
