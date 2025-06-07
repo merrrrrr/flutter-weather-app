@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:whether_app/screens/weather_screen.dart';
+import 'package:weather_app/screens/weather_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:whether_app/screens/change_location_screen.dart';
-import 'package:whether_app/screens/settings_screen.dart';
+import 'package:weather_app/screens/change_location_screen.dart';
+import 'package:weather_app/screens/settings_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
+	WidgetsFlutterBinding.ensureInitialized();
 	await dotenv.load(fileName: '.env');
   runApp(const ProviderScope(child: MyApp()));
 }

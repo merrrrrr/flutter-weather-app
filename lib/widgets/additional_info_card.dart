@@ -23,13 +23,13 @@ class AdditionalInfoCard extends StatelessWidget {
 
 				Text(
 					style: TextStyle(
-						fontSize: 16.0,
+						fontSize: 14.0,
 					),
 					title),
 
 				Text(
 					style: TextStyle(
-						fontSize: 16.0,
+						fontSize: 14.0,
 						fontWeight: FontWeight.bold,
 					),
 					value

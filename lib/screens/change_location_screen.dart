@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whether_app/providers/location_provider.dart';
+import 'package:weather_app/providers/location_provider.dart';
 
 class ChangeLocationScreen extends ConsumerWidget {
   const ChangeLocationScreen({super.key});
@@ -55,7 +55,7 @@ class ChangeLocationScreen extends ConsumerWidget {
     'Tokyo',
 	];
 
-	final city = ref.read(locationNotifier.notifier);
+	final city = ref.read(locationProvider.notifier);
 
     return Scaffold(
 			appBar: AppBar(

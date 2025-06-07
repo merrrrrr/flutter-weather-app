@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whether_app/providers/settings_provider.dart';
+import 'package:weather_app/providers/settings_provider.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -18,7 +18,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Scaffold(
 			appBar: AppBar(
 				title: Text(
-					'Settings (In Progress)',
+					'Settings',
 					style: TextStyle(
 						fontWeight: FontWeight.bold,
 					),
@@ -66,7 +66,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 						value: 'metric',
 						groupValue: settings.unit, 
 						onChanged: (value) {
-							settingsNotifier.updateUnit(value as String);
+							if (value != null) {
+								settingsNotifier.updateUnit(value);
+							}
 						},
 					),
 
@@ -75,7 +77,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 						value: 'imperial',
 						groupValue: settings.unit,
 						onChanged: (value) {
-							settingsNotifier.updateUnit(value as String);
+							if (value != null) {
+								settingsNotifier.updateUnit(value);
+							}
 						},
 					),
 
@@ -94,7 +98,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 					),
 
 					CheckboxListTile(
-						value: settings.additionalInfo['humidity'] ?? true,
+						value: settings.additionalInfo['humidity'],
 						onChanged: (value) {
 							settingsNotifier.updateAdditionalInfo('humidity', value!);
 						},
@@ -102,7 +106,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 					),
 
 					CheckboxListTile(
-						value: settings.additionalInfo['pressure'] ?? true,
+						value: settings.additionalInfo['pressure'],
 						onChanged: (value) {
 							settingsNotifier.updateAdditionalInfo('pressure', value!);
 						},
@@ -110,7 +114,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 					),
 
 					CheckboxListTile(
-						value: settings.additionalInfo['windSpeed'] ?? true,
+						value: settings.additionalInfo['windSpeed'],
 						onChanged: (value) {
 							settingsNotifier.updateAdditionalInfo('windSpeed', value!);
 						},
@@ -118,7 +122,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 					),
 
 					CheckboxListTile(
-						value: settings.additionalInfo['windDirection'] ?? true,
+						value: settings.additionalInfo['windDirection'],
 						onChanged: (value) {
 							settingsNotifier.updateAdditionalInfo('windDirection', value!);
 						},
@@ -126,7 +130,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 					),
 
 					CheckboxListTile(
-						value: settings.additionalInfo['visibility'] ?? true,
+						value: settings.additionalInfo['visibility'],
 						onChanged: (value) {
 							settingsNotifier.updateAdditionalInfo('visibility', value!);
 						},
@@ -134,20 +138,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 					),
 
 					CheckboxListTile(
-						value: settings.additionalInfo['uvIndex'] ?? true,
+						value: settings.additionalInfo['uvIndex'],
 						onChanged: (value) {
 							settingsNotifier.updateAdditionalInfo('uvIndex', value!);
 						},
 						title: Text('UV Index')
 					),
 
-					CheckboxListTile(
-						value: settings.additionalInfo['airQualityIndex'] ?? true,
-						onChanged: (value) {
-							settingsNotifier.updateAdditionalInfo('Air Quality Index', value!);
-						},
-						title: Text('Air Quality Index')
-					),
 				],
 			),
 		);
