@@ -1,7 +1,3 @@
-# Flutter Weather App
-
-This is a flutter weather app with basic weather information and weather forecast up to 5 hours.
-
 ## To Run This App
 
 1. Run 
