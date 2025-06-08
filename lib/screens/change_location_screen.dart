@@ -8,32 +8,32 @@ class ChangeLocationScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 		final List<String> domesticCity = [
-		// 'Alor Setar',
-		// 'Batu Pahat',
-		// 'Bukit Mertajam',
-		// 'Butterworth',
-		// 'Ipoh',
-		// 'Johor Bahru',
-		// 'Kangar',
-		// 'Klang',
-		// 'Kluang'
-		// 'Kota Bharu',
-		// 'Kota Kinabalu',
-		// 'Kuala Lumpur',
-		// 'Kuala Selangor',
-		// 'Kuala Terengganu',
-		// 'Kuantan',
-		// 'Kuching',
-		// 'Labuan',
-		// 'Malacca',
-		// 'Pahang',
-		// 'Petaling Jaya',
-		// 'Penang',
-		// 'Putrajaya',
-		// 'Seremban',
-		// 'Sibu',
-		// 'Sungai Petani',
-		// 'Taiping',
+		'Alor Setar',
+		'Batu Pahat',
+		'Bukit Mertajam',
+		'Butterworth',
+		'Ipoh',
+		'Johor Bahru',
+		'Kangar',
+		'Klang',
+		'Kluang',
+		'Kota Bharu',
+		'Kota Kinabalu',
+		'Kuala Lumpur',
+		'Kuala Selangor',
+		'Kuala Terengganu',
+		'Kuantan',
+		'Kuching',
+		'Labuan',
+		'Malacca',
+		'Pahang',
+		'Petaling Jaya',
+		'Penang',
+		'Putrajaya',
+		'Seremban',
+		'Sibu',
+		'Sungai Petani',
+		'Taiping',
 	];
 
 	final List<String> internationalCity = [
@@ -57,35 +57,56 @@ class ChangeLocationScreen extends ConsumerWidget {
 
 	final city = ref.read(locationProvider.notifier);
 
-    return Scaffold(
-			appBar: AppBar(
-				title: const Text(
-					'Change Location',
-					style: TextStyle(
-						fontWeight: FontWeight.bold,
+    return DefaultTabController(
+			length: 2,
+			child: Scaffold(
+				appBar: AppBar(
+					title: const Text(
+						'Change Location',
+						style: TextStyle(
+							fontWeight: FontWeight.bold,
+						),
+					),
+					bottom: TabBar(
+						tabs: [
+							Tab(text: 'Domestic'),
+							Tab(text: 'International'),
+						],
 					),
 				),
-			),
-
-			body: ListView.builder(
-				itemCount: (domesticCity.length + internationalCity.length),
-				itemBuilder: (context, index) {
-					return ListTile(
-						title: Text(
-							index < domesticCity.length
-								? domesticCity[index]
-								: internationalCity[index - domesticCity.length],
+					
+				body: TabBarView(
+					children: [
+						ListView.builder(
+							itemCount: domesticCity.length,
+							itemBuilder: (context, index) {
+								return ListTile(
+									title: Text(domesticCity[index]),
+									onTap: () {
+										city.updateCity(domesticCity[index]);
+										Navigator.pop(context);
+									},
+								);
+							},
 						),
-						onTap: () {
-							final selectedLocation = index < domesticCity.length
-								? domesticCity[index]
-								: internationalCity[index - domesticCity.length];
-							city.updateCity(selectedLocation);
-							Navigator.pop(context);
-						},
-					);
-				},
-			),
+									
+						ListView.builder(
+							itemCount: internationalCity.length,
+							itemBuilder: (context, index) {
+								return ListTile(
+									title: Text(internationalCity[index]),
+									onTap: () {
+										city.updateCity(internationalCity[index]);
+										Navigator.pop(context);
+									},
+								);
+							},
+						),
+					],
+				),
+			)
+						
 		);
+				
   }
 }

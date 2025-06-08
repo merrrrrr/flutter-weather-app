@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
 				'/changeLocation': (context) => const ChangeLocationScreen(),
 				'/settings': (context) => const SettingsScreen(),
 			},
-			home: const WeatherScreen(),
+			home: WeatherScreen(),
     );
   }
 }

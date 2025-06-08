@@ -257,21 +257,21 @@ class _WeatherScreenState extends ConsumerState<WeatherScreen> {
 																	),
 																	'Additional Information',
 																),
-													
+
 																SizedBox(
+																	height: infoList.length > 3 ? 255.0 : 135.0,
 																	width: double.infinity,
 																	child: Card(
 																		child: Padding(
 																			padding: const EdgeInsets.all(16.0),
 																			child: GridView.builder(
-																				
 																				physics: NeverScrollableScrollPhysics(),
 																				shrinkWrap: true,
 																				gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
 																					crossAxisCount: 3,
 																					crossAxisSpacing: 8.0,
 																					mainAxisSpacing: 8.0,
-																					childAspectRatio: 0.95,
+																					childAspectRatio: 1.0,
 																				),
 																				itemCount: infoList.length,
 																				itemBuilder: (context, index) {

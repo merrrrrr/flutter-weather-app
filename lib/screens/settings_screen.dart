@@ -73,7 +73,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 					),
 
 					RadioListTile(
-						title: Text('Imperial (The one not logical)'),
+						title: Text('Imperial'),
 						value: 'imperial',
 						groupValue: settings.unit,
 						onChanged: (value) {
