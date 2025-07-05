@@ -14,14 +14,16 @@ class LocationState{
 }
 
 class LocationNotifier extends StateNotifier<LocationState> {
-	LocationNotifier() : super(LocationState(city: '')) {
+	LocationNotifier() : super(LocationState(city: 'Kuala Lumpur')) {
 		_loadSavedCity();
 	}
 
 	void _loadSavedCity() async {
 		final prefs = await SharedPreferences.getInstance();
 		final savedCity = prefs.getString('city');
-		state = LocationState(city: savedCity ?? 'Kuala Lumpur');
+		if (savedCity != null && savedCity.isNotEmpty) {
+      state = LocationState(city: savedCity);
+    }
 	}
 
 	void _saveCity() async {

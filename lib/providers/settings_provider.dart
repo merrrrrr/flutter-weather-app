@@ -33,7 +33,6 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
 			'windDirection': false,
 			'visibility': false,
 			'uvIndex': false,
-			'airQualityIndex': false,
 		}
 	)) {
 		_loadSavedSettings();
@@ -58,7 +57,6 @@ class SettingsNotifier extends StateNotifier<SettingsState> {
 					'windDirection': false,
 					'visibility': false,
 					'uvIndex': false,
-					'airQualityIndex': false,
 				}
 		);
 	}

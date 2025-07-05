@@ -14,27 +14,28 @@ class AdditionalInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-			spacing: 8.0,
-			children: [
-				Icon(
-					icon,
-					size: 40.0,
-				),
+    	mainAxisAlignment: MainAxisAlignment.center,
+    	spacing: 8.0,
+    	children: [
+    		Icon(
+    			icon,
+    			size: 40.0,
+    		),
 
-				Text(
-					style: TextStyle(
-						fontSize: 14.0,
-					),
-					title),
+    		Text(
+    			style: TextStyle(
+    				fontSize: 14.0,
+    			),
+    			title),
 
-				Text(
-					style: TextStyle(
-						fontSize: 14.0,
-						fontWeight: FontWeight.bold,
-					),
-					value
-				),
-			],
-		);
+    		Text(
+    			style: TextStyle(
+    				fontSize: 14.0,
+    				fontWeight: FontWeight.bold,
+    			),
+    			value
+    		),
+    	],
+    );
   }
 }

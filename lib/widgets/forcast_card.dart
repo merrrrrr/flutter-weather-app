@@ -34,7 +34,7 @@ class _ForecastCardState extends ConsumerState<ForecastCard> {
 							),
 																						
 							Image.network(
-								'http:${widget.icon}',
+								'https:${widget.icon}',
 								width: 50.0,
 								height: 50.0,
 							),
